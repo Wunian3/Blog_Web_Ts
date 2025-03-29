@@ -1,6 +1,6 @@
 <template>
   <div class="wunian_admin">
-    <aside>
+    <aside :class="{collapsed: store.collapsed}">
       <Blog_logo></Blog_logo>
       <Blog_menu></Blog_menu>
     </aside>
@@ -8,23 +8,9 @@
       <div class="blog_head">
         <Blog_bread_crumb></Blog_bread_crumb>
         <div class="blog_function_area">
-          <IconMenu class="action_icon"></IconMenu>
+          <IconHome class="action_icon" @click ="goIndex"></IconHome>
           <Blog_theme></Blog_theme>
-          <div class="blog_user_info_menu">
-            <a-dropdown  >
-              <div class="blog_user_info_menu_dropdown">
-                <img src="/image/默认头像.jpg" alt="">
-                <span class="blog_user_info_menu_dropdown_span">wunian</span>
-                <IconDown></IconDown>
-              </div>
-              <template #content>
-                <a-doption>Option 1</a-doption>
-                <a-doption>Option 3</a-doption>
-                <a-doption>Option 4</a-doption>
-                <a-doption>Option 5</a-doption>
-              </template>
-            </a-dropdown>
-          </div>
+          <Blog_user_inf_menu></Blog_user_inf_menu>
         </div>
       </div>
       <Blog_tabs></Blog_tabs>
@@ -45,12 +31,7 @@
 <script setup lang="ts">
 import Blog_menu from '@/components/admin/blog_menu.vue';
 import {
-  IconMenu,
-  IconSun,
-  IconApps,
-  IconBug,
-  IconBulb,
-  IconUser,
+  IconHome,
   IconDown,
 } from '@arco-design/web-vue/es/icon';
 import {type Component, ref} from "vue";
@@ -60,10 +41,18 @@ import Blog_bread_crumb from "@/components/admin/blog_bread_crumb.vue";
 import Blog_logo from "@/components/admin/blog_logo.vue";
 import Blog_tabs from "@/components/admin/blog_tabs.vue";
 import Blog_theme from "@/components/common/blog_theme.vue";
+import {useStore} from "@/stores";
+import Blog_user_inf_menu from "@/components/common/blog_user_inf_menu.vue";
 
+const store = useStore()
 const route = useRoute()
 const router = useRouter()
 
+function goIndex(){
+  router.push({
+    name:"index"
+  })
+}
 
 </script>
 <style lang="scss">
@@ -76,13 +65,23 @@ const router = useRouter()
     width: 240px;
     border-right: 1px solid var(--bg);
     height: 100vh;
+    background-color: var(--color-bg-1);
+    transition: all .3s;
+    position: relative;
   }
+  aside.collapsed {
+    width: 48px;
 
+    & ~ main {
+      width: calc(100% - 48px);
+    }
+  }
 
   main {
     width: calc(100% - 240px);
     overflow-x: hidden;
     overflow-y: auto;
+    transition: all .3s;
 
     .blog_head{
       width: 100%;
@@ -92,15 +91,23 @@ const router = useRouter()
       justify-content: space-between;
       padding: 0 20px;
       align-items: center;
+      background-color: var(--color-bg-1);
 
       .blog_function_area{
         display: flex;
         align-items: center;
+
         .action_icon{
           margin-right: 10px;
           cursor: pointer;
           font-size: 16px;
+          transition: color .3s;
+
+          &:hover{
+            color: var(--active);
+          }
         }
+
         .blog_user_info_menu{
           img{
             width: 30px;

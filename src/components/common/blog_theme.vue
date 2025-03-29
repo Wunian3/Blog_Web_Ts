@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import {IconSun, IconMoon} from "@arco-design/web-vue/es/icon";
-import {useStore} from "@/stores/counter";
+import {useStore} from "@/stores";
 
 const store = useStore()
 // console.log(store.theme,store.themeString)

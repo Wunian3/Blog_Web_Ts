@@ -114,7 +114,16 @@ const router = createRouter({
                 title: '菜单列表',
               },
               component: () => import('../views/admin/system/menu_list.vue'),
-            }
+            },
+            {
+              path: 'log_list',
+              name: 'log_list',
+              meta:{
+                title: '系统日志',
+              },
+              component: () => import('../views/admin/system/log_list.vue'),
+            },
+
           ]
         },
       ]

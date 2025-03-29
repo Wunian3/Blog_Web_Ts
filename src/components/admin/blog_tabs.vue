@@ -25,14 +25,15 @@ import {onMounted, ref, watch} from "vue";
 import type {Ref} from "vue";
 import {useRoute,useRouter} from "vue-router";
 import {Swiper, SwiperSlide} from 'swiper/vue';
+import type {tabType} from "@/types";
 
 const slidesPerView = ref(12)
 
 onMounted(() => {
   // 总宽度
-  let mySwiperWith = document.querySelector(".mySwiper").clientWidth
+  let mySwiperWith = (document.querySelector(".mySwiper") as Element).clientWidth
   // 实际宽度
-  let actualWidth = document.querySelector(".swiper-wrapper").scrollWidth
+  let actualWidth = (document.querySelector(".swiper-wrapper")as Element).scrollWidth
   if (actualWidth <= mySwiperWith) {
     return
   }
@@ -54,10 +55,7 @@ onMounted(() => {
 const route = useRoute();
 const router= useRouter();
 
-interface tabType {
-  name: string;
-  title: string;
-}
+
 
 const tabList: Ref<tabType[]> = ref([
   {name: "home", title: "首页"},
@@ -144,6 +142,7 @@ function inList(name: string): boolean {
   display: flex;
   align-items: center;
   position: relative;
+  background-color: var(--color-bg-1);
 
   .mySwiper {
     width: calc(100% - 94px);

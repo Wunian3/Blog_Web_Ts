@@ -1,13 +1,30 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
+export interface userInfType{
+    avatar: string
+    nick_name: string
+    user_id: number
+    role: number
+    token:string
+}
 
-const theme = true // true light
+const theme:boolean = true // true light
+const collapsed :boolean =false
+const userInf: userInfType={
+    avatar:"/image/默认头像.jpg",
+    nick_name:"雾念",
+    user_id:0,
+    role:0,
+    token:"",
+}
 
 export const useStore = defineStore('counter', {
     state() {
         return {
             theme: theme,
+            collapsed: collapsed,
+            userInf: userInf,
         }
     },
     actions: {
@@ -33,6 +50,9 @@ export const useStore = defineStore('counter', {
             }catch (e){
                 return;
             }
+        },
+        setCollapsed(collapsed: boolean){
+            this.collapsed = collapsed
         }
     },
     getters: {
