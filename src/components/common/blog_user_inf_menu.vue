@@ -4,8 +4,8 @@
   <div class="blog_user_info_menu">
     <a-dropdown  @select="select" class="blog_dropdown">
       <div class="blog_user_info_menu_dropdown">
-        <img :src="store.userInf.avatar" alt="">
-        <span class="blog_user_info_menu_dropdown_span">{{ store.userInf.nick_name }}</span>
+        <img :src="store.userInfo.avatar" alt="">
+        <span class="blog_user_info_menu_dropdown_span">{{ store.userInfo.nick_name }}</span>
         <IconDown></IconDown>
       </div>
       <template #content>
@@ -32,7 +32,7 @@ const store = useStore();
 
 const dopList :dopType[]=[
   {
-    name:"user_inf",
+    name:"user_info",
     title:"个人信息",
   },
   {
@@ -68,6 +68,8 @@ const dopList :dopType[]=[
 function select(value :any) {
   let val = (value as string)
   if(val === "logout"){
+    store.logout()
+    router.push({name:"index"})
     return
   }
   router.push({

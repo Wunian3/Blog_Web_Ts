@@ -1,6 +1,6 @@
 <template>
   <div class="wunian_logo">
-    <img src="/image/blog_logo.png" alt="">
+    <img src="https://p.sda1.dev/23/eefa77d9df1623d7dce19d51b8d8150a/blog_logo _1_.jpg" alt="">
     <div class="logo_head">
       <div>雾念BLOG</div>
       <div>wunianblog</div>

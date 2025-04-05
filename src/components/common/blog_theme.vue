@@ -11,7 +11,6 @@ import {IconSun, IconMoon} from "@arco-design/web-vue/es/icon";
 import {useStore} from "@/stores";
 
 const store = useStore()
-// console.log(store.theme,store.themeString)
-store.loadTheme()
+// console.log(store.theme,store.themeString
 
 </script>
