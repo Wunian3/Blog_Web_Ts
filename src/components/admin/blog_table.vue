@@ -39,7 +39,6 @@
       </a-button>
     </div>
   </div>
-
     <a-spin class ="blog_table_data"  :loading="isLoading" tip="加载中">
       <div >
         <div class="blog_table_source">
@@ -136,7 +135,6 @@ interface Props {
   searchPlaceholder?: string // 模糊匹配的提示词
   defaultParams?: paramsType & any //第一次查询的查询参数
   noPage?: boolean //不分
-
 }
 
 const props = defineProps<Props>()
@@ -310,6 +308,11 @@ async function getList(p?: paramsType & any) {
   isLoading.value = true
   let res = await props.url(params)
   isLoading.value = false
+  if(res.code){
+    Message.error(res.msg)
+    return
+  }
+  isLoading.value = false
   data.list = res.data.list
   data.count = res.data.count
 }
@@ -329,8 +332,14 @@ function flush(){
 
 getList(props.defaultParams)
 
+function clearData(){
+  data.list = []
+  data.count = 0
+}
+
 defineExpose({
-  getList
+  getList,
+  clearData
 })
 
 
@@ -368,12 +377,14 @@ defineExpose({
       }
     }
 
+
+
     .action_flush{
       position: absolute;
       right: 20px;
       margin-right: 0;
 
-      bottom{
+      button{
         padding: 0 10px;
       }
     }

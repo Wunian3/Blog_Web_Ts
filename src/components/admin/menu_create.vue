@@ -85,6 +85,7 @@ getList()
 
 const emits = defineEmits(["update:visible", "ok"])
 
+
 const form = reactive<menuCreateRequest & { abstractString: string, imageIdList: number[] }>({
   abstract: [],
   abstract_time: 7,
@@ -129,7 +130,7 @@ async function okHandler() {
     })
   }
   form.image_sort_list = imageSortIdList
-  let res: baseResponse<string> = {}
+  let res: baseResponse<string>
   if (editId.value) {
     res = await menuUpdateApi(editId.value, form)
   } else {
@@ -144,7 +145,6 @@ async function okHandler() {
   emits("update:visible", false)
   emits("ok")
 }
-
 
 
 
