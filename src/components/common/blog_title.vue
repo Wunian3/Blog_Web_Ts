@@ -9,7 +9,7 @@ const props = defineProps({
   title: {type: String}
 })
 </script>
-<style scoped lang="scss">
+<style  lang="scss">
 .blog_title{
   font-size: 16px;
   font-weight: 700;

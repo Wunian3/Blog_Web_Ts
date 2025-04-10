@@ -372,21 +372,5 @@ function jsonPreview() {
   }
 }
 
-.search_user{
-  margin-right: 10px;
-}
-.search_addr{
-  margin-right: 10px;
 
-}
-.arco-input-wrapper{
-  margin-right: 10px;
-
-}
-.filter_status{
-  margin-right: 10px;
-}
-.search_date{
-  margin-right: 10px;
-}
 </style>

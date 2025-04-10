@@ -9,9 +9,9 @@
                 v-model="actionValue"></a-select>
 
       <a-popconfirm content="是否确认执行此操作?" v-if="!props.noConfirm" @ok="actionMethod" >
-        <a-button type="primary" status="danger" v-if="actionValue !== undefined">执行</a-button>
+        <a-button type="primary" status="danger" v-if="actionValue !== undefined&&actionValue !== ''">执行</a-button>
         </a-popconfirm>
-      <a-button v-else type="primary" status="danger" v-if="actionValue !== undefined " @click="actionMethod">执行</a-button>
+      <a-button v-else type="primary" status="danger" v-if="actionValue !== undefined &&actionValue !== ''" @click="actionMethod">执行</a-button>
 
     </div>
     <div class="action_search">
@@ -22,8 +22,7 @@
          @search="search">
       </a-input-search>
     </div>
-    <slot name ="action_other_search">
-    </slot>
+    <slot name ="action_other_search"></slot>
     <div class="action_filter" v-if="filterGroup.length">
       <a-select
           :placeholder="item.label"
@@ -81,7 +80,8 @@
           </a-table>
         </div>
         <div class="blog_table_page" v-if="!props.noPage">
-          <a-pagination :total="data.count" @change="pageChange" v-model:current="params.page" :default-page-size="params.limit" show-total show-jumper/>
+          <a-pagination :total="data.count" @change="pageChange" v-model:current="params.page"
+                        :default-page-size="params.limit" show-total show-jumper/>
         </div>
       </div>
     </a-spin>
@@ -113,7 +113,7 @@ export interface filterOptionType {
   label: string;
   value?:number;
   column:string;
-  source:optionType[]|string|filterFunc
+  source:optionType[] | string | filterFunc
   options?:optionType[]
 }
 
@@ -135,6 +135,7 @@ interface Props {
   searchPlaceholder?: string // 模糊匹配的提示词
   defaultParams?: paramsType & any //第一次查询的查询参数
   noPage?: boolean //不分
+
 }
 
 const props = defineProps<Props>()
@@ -182,9 +183,12 @@ function initActionGroup() {
 
 initActionGroup()
 
-const actionValue = ref<number | undefined>(undefined)
+const actionValue = ref<number | undefined|"">(undefined)
 
 function actionMethod() {
+  if(actionValue.value === ""){
+    return
+  }
   // 判断是不是1
   if (actionValue.value === 0) {
     // 批量删除
@@ -278,6 +282,7 @@ async function removeIdData(idList:(number|string)[]){
       return
     }
     Message.success(res.msg)
+    selectedKeys.value = []
     getList()
     return;
   }
@@ -347,7 +352,7 @@ defineExpose({
 
 </script>
 
-<style scoped lang="scss">
+<style  lang="scss">
 .blog_table {
   background-color: var(--color-bg-1);
   border-radius: 5px;
@@ -359,7 +364,7 @@ defineExpose({
     align-items: center;
     position: relative;
 
-    >div {
+    > div {
       margin-right: 10px;
     }
 
@@ -372,12 +377,11 @@ defineExpose({
 
     .action_filter{
       display: flex;
-      > .arco-select{
+      .arco-select {
         margin-right: 10px;
       }
+
     }
-
-
 
     .action_flush{
       position: absolute;

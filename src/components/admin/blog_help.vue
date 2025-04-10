@@ -27,7 +27,7 @@ const {helpTitle="帮助"} = props
 
 
 </script>
-<style scoped lang="scss">
+<style  lang="scss">
 
 .blog_help{
   max-height: calc(100vh - 170px);
