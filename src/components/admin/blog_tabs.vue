@@ -30,10 +30,17 @@ import type {tabType} from "@/types";
 const slidesPerView = ref(12)
 
 onMounted(() => {
-  // 总宽度
-  let mySwiperWith = (document.querySelector(".mySwiper") as Element).clientWidth
+  let mySwiper =  (document.querySelector(".mySwiper")as Element)
+  let mySwiperWith = 1200
+  if (mySwiper !== null) {
+    mySwiperWith=mySwiper.clientWidth
+  }
   // 实际宽度
-  let actualWidth = (document.querySelector(".swiper-wrapper")as Element).scrollWidth
+  let actual = (document.querySelector(".swiper-wrapper")as Element)
+  let actualWidth = 1200
+  if (mySwiper !== null) {
+    actualWidth=actual.scrollWidth
+  }
   if (actualWidth <= mySwiperWith) {
     return
   }

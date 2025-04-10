@@ -66,10 +66,12 @@ const menuList:MenuType[]=[
   },
   {title:"文章管理",icon:IconUser,name:"article",child:[
       {title:"文章列表",icon:IconUser,name:"article_list"},
+      {title:"图片列表",icon:IconUser,name:"image_list"},
     ]
   },
   {title:"用户管理",icon:IconUser,name:"users",child:[
       {title:"用户列表",icon:IconUser,name:"user_list"},
+      {title:"消息列表",icon:IconUser,name:"message_list"},
     ]
   },
   {title:"群聊管理",icon:IconUser,name:"chat_group",child:[
