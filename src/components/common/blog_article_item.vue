@@ -16,7 +16,7 @@
           <a-tag color="red">{{props.data.category}}</a-tag>
           </span>
         <span class="date">
-          <IconLock></IconLock>
+          <IconClockCircle></IconClockCircle>
           {{dataFormat(props.data.created_at)}}</span>
         <span class="article_data_col">
                 <span>
@@ -41,12 +41,12 @@
   </div>
 </template>
 <script setup lang="ts">
-import {IconClockCircle} from "@arco-design/web-vue/es/icon";
-import type {articleItemType} from "@/api/article_api.ts";
+import type {articleDataType, articleItemType, articleUpdateType} from "@/api/article_api.ts";
 import {dataFormat} from "@/utils/date.ts";
+import {IconClockCircle} from "@arco-design/web-vue/es/icon";
 
 interface Props{
-  data:articleItemType,
+  data:articleUpdateType & articleDataType,
 }
 
 const props = defineProps<Props>();

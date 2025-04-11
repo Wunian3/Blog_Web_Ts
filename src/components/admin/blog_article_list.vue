@@ -11,6 +11,7 @@
         no-confirm
         :filter-group="filterGroup"
         ref="blogTable"
+        :default-params="params"
         @edit="editArticleInfo"
         @add="createVisible = true"
         search-placeholder="搜索文章标题">
@@ -47,7 +48,7 @@
       </template>
       <template #action_middle="{record}:{record: articleType}">
         <a-button type="outline" @click="editArticleContent(record)" >编辑正文 </a-button>
-        </template>
+      </template>
     </blog_table>
   </div>
 </template>
@@ -64,9 +65,11 @@ import {tagOptionsApi} from "@/api/tag_api";
 import Blog_article_update from "@/components/common/blog_article_update.vue";
 import Blog_article_drawer from "@/components/common/blog_article_drawer.vue";
 import Blog_article_content_drawer from "@/components/common/blog_article_content_drawer.vue";
-
+import type {paramsType} from "@/api";
 
 const blogTable = ref()
+
+
 const colorList = [
   'red',
   'orangered',
@@ -82,6 +85,11 @@ const colorList = [
   'magenta',
   'gray'
 ]
+
+const params = reactive<paramsType&{is_user:boolean}>({
+  is_user:true
+})
+
 const filterGroup: filterOptionType[] = [
   {
     label: "文章分类",
@@ -138,38 +146,3 @@ function editArticleContent(record: articleType) {
 }
 
 </script>
-
-<style lang="scss">
-@mixin marginRight($width){
-  margin-right: $width;
-  &:last-child{
-    margin-right: 0;
-  }
-}
-
-.article_list {
-  .article_data_col {
-    >span{
-      color: var(--color-text-2);
-      @include marginRight(10px);
-
-      i{
-        margin-right: 5px;
-      }
-
-    }
-  }
-
-  .article_tags_col{
-    .arco-tag{
-      @include marginRight(5px);
-    }
-  }
-  .article_title_col{
-    em{
-      color:rgb(var(--red-6));
-    }
-  }
-}
-
-</style>

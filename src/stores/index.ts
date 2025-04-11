@@ -5,6 +5,8 @@ import {parseToken} from "@/utils/jwt.ts";
 import {logoutApi} from "@/api/user_api.ts";
 import {userInfoApi} from "@/api/user_api.ts";
 import type {userInfoType} from "@/api/user_api.ts";
+import type {Themes} from "md-editor-v3";
+
 
 export interface userStoreInfoType{
     user_name:string
@@ -112,7 +114,7 @@ export const useStore = defineStore('counter', {
 
     },
     getters: {
-        themeString(): string {
+        themeString(): Themes {
             return this.theme ? "light" : "dark"
         },
         isLogin(): boolean {

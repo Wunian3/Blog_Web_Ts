@@ -65,3 +65,33 @@ export interface userUpdateRequest{
 export function userUpdateApi(data:userUpdateRequest):Promise<baseResponse<string>>{
     return useAxios.put("/api/users_role",data)
 }
+
+
+export interface userInfoUpdateType{
+    nick_name: string,
+    link: string,
+    sign: string,
+}
+
+export function userInfoUpdateApi(data:userInfoUpdateType):Promise<baseResponse<string>>{
+    return useAxios.put("/api/user_info",data)
+}
+
+export interface userUpdatePasswordType{
+    old_pwd:string,
+    pwd:string,
+    re_pwd:string,
+}
+export function  userUpdatePasswordApi(data:userUpdatePasswordType):Promise<baseResponse<string>>{
+    return useAxios.put("/api/user_password",data)
+}
+
+export interface userBindEmailType{
+    code? :string,
+    email:string,
+    password?:string,
+}
+
+export function userBindEmailApi(data:userBindEmailType):Promise<baseResponse<string>>{
+    return useAxios.post("/api/user_email_bind",data)
+}

@@ -14,6 +14,9 @@
         </a-form-item>
       </a-form>
     </a-modal>
+
+    <blog_message_record_modal v-model:visible="messageVisible" :userID="userID"></blog_message_record_modal>
+
     <blog_table :url="userListApi"
                 :columns="columns"
                 default-delete
@@ -25,7 +28,7 @@
                 @add="visible=true"
                 @edit="edit">
       <template #avatar="{record}:{record: userInfoType}">
-        <a-avatar :imageUrl="record.avatar"></a-avatar>
+        <a-avatar @click="checkMessage(record)" :imageUrl="record.avatar"></a-avatar>
       </template>
       <template #ip="{record}:{record: userInfoType}">
         <span>{{record.ip}} ({{ record.addr}})</span>
@@ -47,6 +50,7 @@ import {userUpdateApi} from "@/api/user_api.ts";
 import type {userUpdateRequest} from "@/api/user_api.ts";
 import {roleOptions} from "@/global/global.ts";
 import {Message} from "@arco-design/web-vue";
+import Blog_message_record_modal from "@/components/common/blog_message_record_modal.vue";
 const columns = [
   {title: '昵称', dataIndex: 'nick_name'},
   {title: '头像', slotName: 'avatar'},
@@ -103,6 +107,13 @@ async function updateUserOk() {
   return true
 }
 
+const messageVisible =ref(false)
+const userID = ref(0)
+
+function  checkMessage(record: userInfoType) {
+  messageVisible.value = true
+  userID.value=record.id
+}
 
 </script>
 

@@ -31,6 +31,30 @@ export function messageUserListApi(params?:messageParams):Promise<baseResponse<l
 export function messageUserListByUserApi(userID:number):Promise<baseResponse<listDataType<messageType>>>{
     return useAxios.get("/api/message_users/user",{params:{userID}})
 }
-export function messageUserRecordApi(userID1:number,userID2:number):Promise<baseResponse<listDataType<messageRecordType>>>{
-    return useAxios.get("/api/message_users/record",{params:{userID1,userID2}})
+export function messageUserRecordApi(sendUserID:number,revUserID:number):Promise<baseResponse<listDataType<messageRecordType>>>{
+    return useAxios.get("/api/message_users/record",{params:{sendUserID,revUserID}})
+}
+
+//我的消息列表
+export function messageUserListByMeApi():Promise<baseResponse<listDataType<messageType>>>{
+    return useAxios.get("/api/message_users/me")
+}
+
+export interface userRecordRequestType extends paramsType{
+    userID:number
+
+}
+
+//聊天列表
+export function messageUserMeRecordApi(params:userRecordRequestType):Promise<baseResponse<listDataType<messageRecordType>>>{
+    return useAxios.get("/api/message_users/record/me",{params})
+}
+
+export interface messagePublishType {
+    content:string
+    rev_user_id:number
+}
+
+export function messagePublishApi(data:messagePublishType):Promise<baseResponse<string>>{
+    return useAxios.post("/api/msgs",data)
 }

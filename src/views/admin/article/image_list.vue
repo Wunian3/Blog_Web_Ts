@@ -59,7 +59,8 @@ import type {imageType, imagesUploadResponse} from "@/api/image_api";
 const columns = [
   {title: '文件名', dataIndex: 'name'},
   {
-    title: '上传类型', dataIndex: 'image_type', render: ({record}: { record: imageType }) => {
+    title: '上传类型', dataIndex: 'image_type', render: (data:any) => {
+      const record = data.record as imageType
       let color = "red"
       if (record.image_type === "本地") {
         color = "blue"

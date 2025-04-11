@@ -1,32 +1,32 @@
 <template>
-<div class="message_list">
-<div class="user_list_menu">
-  <div class="head">
-    <a-input-search placeholder="搜索用户名" v-model="params.nickName" @search="getMessageData" @keydown.enter="getMessageData"></a-input-search>
-  </div>
-  <blog_message_list @check="messageCheck" :data="messageData.list"></blog_message_list>
+  <div class="message_list">
+    <div class="user_list_menu">
+      <div class="head">
+        <a-input-search placeholder="搜索用户名"></a-input-search>
+      </div>
+      <blog_message_list @check="messageCheck" :data="messageData.list"></blog_message_list>
 
-  <div class="page">
-    <a-pagination simple :total="messageData.count" @change="getMessageData" v-model:current="params.page" :page-size="params.limit"></a-pagination>
-  </div>
-</div>
-<div class="user_menu" v-if="messageUserData.list.length">
-  <blog_message_list @check="messageUserCheck" :data="messageUserData.list"></blog_message_list>
-</div>
-<div class="user_record_menu" v-if="messageRecordData.list.length">
-  <div :class="{message: true, isMe: item.isMe}" v-for="item in messageRecordData.list">
-    <img class="avatar" :src="item.send_user_avatar" alt="">
-    <div class="message-main">
-      <div class="message-user">{{ item.send_user_nick_name }}</div>
-      <div class="message-content">
-        <div class="content">
-          <div class="txt-message">{{ item.content }}</div>
+      <div class="page">
+        <a-pagination simple :total="messageData.count"></a-pagination>
+      </div>
+    </div>
+    <div class="user_menu" v-if="messageUserData.list.length">
+      <blog_message_list @check="messageUserCheck" :data="messageUserData.list"></blog_message_list>
+    </div>
+    <div class="user_record_menu" v-if="messageRecordData.list.length">
+      <div :class="{message: true, isMe: item.isMe}" v-for="item in messageRecordData.list">
+        <img class="avatar" :src="item.send_user_avatar" alt="">
+        <div class="message-main">
+          <div class="message-user">{{ item.send_user_nick_name }}</div>
+          <div class="message-content">
+            <div class="content">
+              <div class="txt-message">{{ item.content }}</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-</div>
 </template>
 <script setup lang="ts">
 
@@ -39,8 +39,6 @@ import {messageUserListApi} from "@/api/message_api.ts";
 import type {messageRecordType} from "@/api/message_api.ts";
 import type {listDataType} from "@/api";
 
-
-const messageList = ref<messageType[]>([]);
 
 const params = reactive<messageParams>({
   page:1,
@@ -81,7 +79,7 @@ async function messageCheck(data: messageType) {
   user1.value = data.userID
 }
 
-const messageRecordData = reactive<listDataType<messageRecordType>>({
+const messageRecordData = reactive<listDataType<messageRecordType &{isMe: boolean}>>({
   list: [],
   count: 0
 })
