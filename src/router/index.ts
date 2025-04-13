@@ -242,6 +242,14 @@ const router = createRouter({
                     title: "jwt设置"
                   },
                   component: () => import('../views/admin/system/config/jwt_config.vue'),
+                },
+                {
+                  path: "gaode",
+                  name: "gaode_config",
+                  meta: {
+                    title: "高德设置"
+                  },
+                  component: () => import('../views/admin/system/config/gaode_config.vue'),
                 }
               ]
             }

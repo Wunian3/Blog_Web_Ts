@@ -30,3 +30,21 @@ export interface statisticsType{
 export function statisticsApi():Promise<baseResponse<statisticsType>>{
     return useAxios.get("/api/data_sum")
 }
+
+export interface weatherType{
+    province:string,
+    city:string,
+    adcode?:string,
+    weather:string,
+    temperature:string,
+    winddirection:string,
+    windpower?:string,
+    humidity?:string,
+    reporttime?:string,
+    temperature_float?:string,
+    humidity_float?:string,
+}
+
+export function  weatherApi():Promise<baseResponse<weatherType>>{
+    return useAxios.get("/api/gaode/weather")
+}

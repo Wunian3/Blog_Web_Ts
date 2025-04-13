@@ -16,7 +16,6 @@
 <script setup lang="ts">
 
 import Blog_config from "@/components/admin/blog_config.vue";
-import {FieldRule} from "@arco-design/web-vue";
 import type {configColumnType} from "@/types";
 import type {qqType} from "@/api/settings_api.ts";
 const column: configColumnType<qqType>[] = [

@@ -50,6 +50,10 @@ export interface jwtType {
     issuer: string
 }
 
+export interface gaodeType {
+    key: string
+    enable: boolean
+}
 export interface qiniuType {
     enable: boolean
     access_key: string
@@ -61,9 +65,9 @@ export interface qiniuType {
     size: number
 }
 
-export type settingsName = "qq" | "email" | "qiniu" | "jwt" |"chat_group"
+export type settingsName = "qq" | "email" | "qiniu" | "jwt" |"chat_group"|"gaode"
 
-export type settingsType =emailType | qqType| jwtType | qiniuType | chatGroupConfigType
+export type settingsType =emailType | qqType| jwtType | qiniuType | chatGroupConfigType |gaodeType
 
 
 export function settingsInfoApi<T extends settingsType >(name:settingsName):Promise<baseResponse<T>>{

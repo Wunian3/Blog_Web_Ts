@@ -6,6 +6,8 @@
       <router-link :to="{name: 'qiniu_config'}">七牛云设置</router-link>
       <router-link :to="{name: 'qq_config'}">QQ设置</router-link>
       <router-link :to="{name: 'jwt_config'}">jwt设置</router-link>
+      <router-link :to="{name: 'gaode_config'}">高德设置</router-link>
+
     </div>
     <div class="system_container">
       <router-view/>
