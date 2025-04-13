@@ -1,4 +1,5 @@
 import {type baseResponse, type listDataType, useAxios} from "@/api/index.ts";
+import type {chatGroupConfigType} from "@/api/chat_api.ts";
 
 export interface siteInfoType{
     addr: string,
@@ -60,9 +61,9 @@ export interface qiniuType {
     size: number
 }
 
-export type settingsName = "qq" | "email" | "qiniu" | "jwt"
+export type settingsName = "qq" | "email" | "qiniu" | "jwt" |"chat_group"
 
-export type settingsType =emailType | qqType| jwtType | qiniuType
+export type settingsType =emailType | qqType| jwtType | qiniuType | chatGroupConfigType
 
 
 export function settingsInfoApi<T extends settingsType >(name:settingsName):Promise<baseResponse<T>>{

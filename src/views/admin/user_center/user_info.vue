@@ -1,13 +1,24 @@
 <template>
   <div class="user_info">
     <div class="left">
+      <blog_cropper ref="clipperRef"
+                   :type="clipperData.type"
+                   :allow-type-list="clipperData.allowTypeList"
+                   :limit-size="clipperData.limitSize"
+                   :fixed-number="clipperData.fixedNumber"
+                   :fixed-number-aider="clipperData.fixedNumberAider"
+                   :preview-width="clipperData.previewWidth"
+                   @confirm="onConfirm" >
+
+      </blog_cropper>
+
       <blog_title title="用户信息"></blog_title>
       <a-form ref="formRef" :model="form" :label-col-props="{span:3}"  :wrapper-col-props="{span:21}">
         <a-form-item label="用户名">
           <span>{{form.user_name}}</span>
         </a-form-item>
         <a-form-item label="头像">
-          <a-avatar :image-url="form.avatar"></a-avatar>
+          <a-avatar @click="showCropper" :image-url="form.avatar"></a-avatar>
         </a-form-item>
         <a-form-item field="nick_name" label="昵称" :rules="[{required:true,message:'请输入昵称'}]"
                      :validate-trigger="['blur']">
@@ -45,7 +56,19 @@
       </div>
     </div>
     <div class="right">
-
+      <blog_title title="预览"></blog_title>
+      <div class="user_info_preview" style="width: 300px ;margin-top:20px" >
+        <blog_user_info_preview :data="{
+          avatar:form.avatar,
+          nick_name:form.nick_name,
+          sign:form.sign,
+          link:form.link,
+          collects_count:Random.integer(1,200),
+          comment_count:Random.integer(1,200),
+          digg_count:Random.integer(1,200),
+          look_count:Random.integer(1,200),
+        }"></blog_user_info_preview>
+      </div>
     </div>
 
 
@@ -60,8 +83,45 @@ import Blog_title from "@/components/common/blog_title.vue";
 import {Message} from "@arco-design/web-vue";
 import Blog_update_password from "@/components/common/blog_update_password.vue";
 import Blog_bind_email from "@/components/common/blog_bind_email.vue";
+import Blog_cropper from "@/components/common/blog_cropper.vue";
+import Blog_user_info_preview from "@/components/common/blog_user_info_preview.vue";
+import {Random} from "mockjs";
 
 const formRef =ref()
+
+interface IClipper{
+  type: string
+  allowTypeList: string[]
+  limitSize: number
+  fixedNumber: number[]
+  fixedNumberAider?: number[]
+  previewWidth:number
+  previewWidthAider?:number
+}
+const clipperData = ref<IClipper>({
+  type: '',
+  allowTypeList: [],
+  limitSize: 1,
+  fixedNumber: [],
+  previewWidth: 0
+})
+const clipperRef = ref()
+function showCropper(){
+  clipperData.value = {
+    type: 'browserLogo', // 该参数可根据实际要求修改类型
+    allowTypeList: ['png', 'jpg', 'jpeg',], // 允许上传的图片格式
+    limitSize: 1, // 限制的大小
+    fixedNumber: [1, 1],  // 截图比例，可根据实际情况进行修改
+    previewWidth: 100 // 预览宽度
+  }
+  // 打开裁剪组件
+  clipperRef.value.uploadFile()
+}
+
+function onConfirm(val: string) {
+  form.avatar = val
+  userInfoUpdate()
+}
 
 const form = reactive<userInfoType>({
   id:0,
@@ -82,6 +142,7 @@ const form = reactive<userInfoType>({
   link:"",
 })
 
+
 async function getData(){
   let res = await userInfoApi()
   Object.assign(form,res.data)
@@ -95,6 +156,7 @@ async function userInfoUpdate(){
     link: form.link,
     nick_name: form.nick_name,
     sign: form.sign,
+    avatar:form.avatar
   }
   let res = await userInfoUpdateApi(data)
   if(res.code){
@@ -110,6 +172,11 @@ getData()
 
 const updatePasswordVisible = ref(false);
 const bindEmailVisible = ref(false);
+
+
+
+
+
 
 </script>
 
@@ -135,6 +202,10 @@ const bindEmailVisible = ref(false);
     }
   }
 
+  .right{
+    margin-left: 20px;
+    width: calc(60% - 20px);
+  }
 
 
 }

@@ -1,7 +1,20 @@
 <template>
   <div class="blog_message_record_component" v-if="recordData.userID">
-    <div class="record_list">
-      <div :class="{message: true, isMe: item.isMe}" v-for="item in messageRecordData.list">
+    <div class="head" v-if="isHead">
+      <div class="title">与{{ props.nickName }}的聊天</div>
+      <div class="manage">
+        <IconRefresh style="cursor: pointer;margin-right: 5px" @click="flush"></IconRefresh>
+        <a-checkbox v-model="isManage">管理模式</a-checkbox>
+        <a-button v-if="isManage && selectIDList.length" size="mini" style="margin-left: 10px" type="primary"
+                  status="danger"
+                  @click="removeChatGroup">删除
+        </a-button>
+      </div>
+    </div>
+    <div :class="{record_list:true,isHead:isHead}">
+      <a-checkbox-group v-model="selectIDList">
+      <div :class="{message: true, isMe: item.isMe,isManage:isManage}" v-for="item in messageRecordData.list">
+        <a-checkbox :value="item.id" v-if="isManage"></a-checkbox>
         <img class="avatar" :src="item.send_user_avatar" alt="">
         <div class="message-main">
           <div class="message-user">{{ item.send_user_nick_name }}</div>
@@ -12,6 +25,7 @@
           </div>
         </div>
       </div>
+      </a-checkbox-group>
     </div>
     <div class="message_record">
       <a-textarea placeholder="请输入聊天内容" @keydown.enter.ctrl="messagePublish"
@@ -23,20 +37,23 @@
 </template>
 <script setup lang="ts">
 import {nextTick, reactive, ref, watch} from "vue";
-import type {messageRecordType, messageType, messageParams} from "@/api/message_api";
+import {type messageRecordType, type messageType, type messageParams, messageRemoveApi} from "@/api/message_api";
 import type {listDataType} from "@/api";
 import {messageUserMeRecordApi} from "@/api/message_api";
 import {useStore} from "@/stores";
 import {messagePublishApi} from "@/api/message_api";
 import type {messagePublishType, userRecordRequestType} from "@/api/message_api";
 import {Message} from "@arco-design/web-vue";
+import {IconRefresh} from "@arco-design/web-vue/es/icon";
 
 interface Props {
   userID: number
+  nickName?: string
+  isHead?: boolean
 }
 
 const props = defineProps<Props>()
-
+const {isHead=false}=props
 
 const store = useStore()
 const params = reactive<messageParams>({
@@ -110,23 +127,73 @@ watch(() => props.userID, () => {
     messagePublishData.rev_user_id = props.userID
     getRecordData()
   }
-})
+},{immediate:true})
 
+const isManage = ref<boolean>(false);
+const selectIDList = ref<number[]>([]);
+
+function flush(){
+  getRecordData()
+  Message.success("刷新成功")
+}
+
+async function removeChatGroup(){
+  let res = await messageRemoveApi(selectIDList.value)
+  if (res.code) {
+    Message.error(res.msg)
+    return
+  }
+  Message.success(res.msg)
+  selectIDList.value = [];
+  getRecordData()
+}
 
 </script>
 <style lang="scss">
 .blog_message_record_component {
   width: 100%;
-  height: calc(100vh - 130px);;
+  height: calc(100vh - 130px);
+
+  .head{
+    height: 60px;
+    width: 100%;
+    border-bottom: 1px solid var(--bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+    position: relative;
+
+    .manage{
+      position: absolute;
+      right: 20px;
+      display: flex;
+      align-items: center;
+    }
+  }
 
   .record_list {
-    padding: 20px;
-    height: calc(100% - 200px);
     overflow-y: auto;
+    height: calc(100% - 200px);
 
+    &.isHead{
+      height: calc(100% - 260px);
+
+    }
+
+    .arco-checkbox-group {
+      width: 100%;
+    }
     .message {
       display: flex;
       margin-bottom: 20px;
+      padding:20px;
+      position: relative;
+
+      &:first-child {
+        margin-top: 20px;
+      }
 
       .avatar {
         width: 40px;
@@ -200,6 +267,17 @@ watch(() => props.userID, () => {
 
 
       }
+
+      .arco-checkbox{
+        position: absolute;
+        right: -10px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      &.isManage{
+        background-color: var(--color-fill-1);
+      }
     }
   }
 
@@ -213,6 +291,7 @@ watch(() => props.userID, () => {
       position: absolute;
       right: 30px;
       bottom: 20px;
+      z-index: 10;
     }
   }
 

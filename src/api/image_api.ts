@@ -1,6 +1,7 @@
 import {type baseResponse, cacheRequest, type paramsType, useAxios} from "@/api/index.ts";
 import type {listDataType} from "@/api/index.ts";
 import type {optionType} from "@/types";
+import {Message} from "@arco-design/web-vue";
 export interface imageIdType{
     id: number;
     name: string;
@@ -44,4 +45,25 @@ export function uploadImageApi(file: File): Promise<baseResponse<string>> {
             }
         }).then((res:any)=>resolve(res)).catch(err=>reject(err))
     });
+}
+
+export async function onUploadImg(files: Array<File>, callback: (urls: Array<string>) => void): Promise<void> {
+    let resList: baseResponse<string>[] = []
+
+    try {
+        resList = await Promise.all(files.map(file => uploadImageApi(file)))
+    } catch (e) {
+        // Message.error(e.message)
+        return
+    }
+
+    const urlList: string[] = []
+    resList.forEach(res => {
+        if (res.code) {
+            Message.error(res.msg)
+            return
+        }
+        urlList.push(res.data)
+    })
+    callback(urlList)
 }

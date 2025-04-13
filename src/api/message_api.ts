@@ -13,6 +13,7 @@ export interface messageType{
     count:number
 }
 export interface messageRecordType{
+    id:number,
     content:string
     created_at:string
     message_count:number
@@ -57,4 +58,7 @@ export interface messagePublishType {
 
 export function messagePublishApi(data:messagePublishType):Promise<baseResponse<string>>{
     return useAxios.post("/api/msgs",data)
+}
+export function messageRemoveApi(id_list:number[]):Promise<baseResponse<string>>{
+    return useAxios.delete('/api/message_users', {data:{id_list}})
 }

@@ -71,6 +71,7 @@ export interface userInfoUpdateType{
     nick_name: string,
     link: string,
     sign: string,
+    avatar: string,
 }
 
 export function userInfoUpdateApi(data:userInfoUpdateType):Promise<baseResponse<string>>{

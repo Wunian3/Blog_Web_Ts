@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-modal title="聊天" width="40%" :visible="props.visible" :footer="false" body-class="blog_message_record_modal_body" @cancel="close">
-      <blog_message_record :userID="props.userID"></blog_message_record>
+      <blog_message_record :userID="props.userID" ></blog_message_record>
     </a-modal>
   </div>
 </template>

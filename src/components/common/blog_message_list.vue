@@ -17,7 +17,8 @@
 <script setup lang="ts">
 import type {messageType} from "@/api/message_api.ts";
 import {ref} from "vue";
-
+import {useRoute} from "vue-router";
+const route = useRoute();
 interface Props {
   data:messageType[]
 }
@@ -25,7 +26,7 @@ interface Props {
 const props =defineProps<Props>();
 
 const emits = defineEmits(["check"])
-const active = ref<number>(0)
+const active = ref<number>(Number(route.query.user_id ));
 
 function checkItem(record: messageType) {
     active.value = record.userID;

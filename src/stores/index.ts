@@ -1,10 +1,9 @@
-import { ref, computed } from 'vue'
+
 import { defineStore } from 'pinia';
 import { Message } from '@arco-design/web-vue';
 import {parseToken} from "@/utils/jwt.ts";
 import {logoutApi} from "@/api/user_api.ts";
 import {userInfoApi} from "@/api/user_api.ts";
-import type {userInfoType} from "@/api/user_api.ts";
 import type {Themes} from "md-editor-v3";
 
 
@@ -122,6 +121,9 @@ export const useStore = defineStore('counter', {
         },
         isAdmin(): boolean {
             return this.userInfo.role == 1
+        },
+        isGeneral(): boolean {
+            return this.userInfo.role == 2
         },
         isTourist(): boolean {
             return this.userInfo.role == 3
