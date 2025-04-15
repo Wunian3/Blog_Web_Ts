@@ -39,6 +39,15 @@ const props = defineProps<Props>();
       font-size: 18px;
       font-weight: 600;
     }
+
+    .right{
+      a{
+        color: var(--color-text-2);
+        text-decoration: none;
+      }
+    }
+
+
   }
 
   .body{

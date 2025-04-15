@@ -4,8 +4,8 @@
       name="qq"
       :left-width="45"
       :right-with="55"
-      :label-span="4"
-      :wrapper-span="20"
+      :label-span="isLaptops1 ? 6:4"
+      :wrapper-span="isLaptops1 ? 18:20"
       :column="column" :help-data="helpList">
     <template #alert>
       <a-alert style="margin-top: 20px">配置qq代登录之后，登录页面点击qq才会有反应</a-alert>
@@ -18,6 +18,8 @@
 import Blog_config from "@/components/admin/blog_config.vue";
 import type {configColumnType} from "@/types";
 import type {qqType} from "@/api/settings_api.ts";
+
+const isLaptops1 = isLaptops
 const column: configColumnType<qqType>[] = [
   {label: "appID", field: "app_id", rules: [{required: true, message: '请输入appID'}], placeholder: "appID"},
   {

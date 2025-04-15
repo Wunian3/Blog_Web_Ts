@@ -4,7 +4,7 @@
       <Blog_logo></Blog_logo>
       <Blog_menu></Blog_menu>
     </aside>
-    <main>
+    <main :class="{isLaptops:isLaptops1}">
       <div class="blog_head">
         <Blog_bread_crumb></Blog_bread_crumb>
         <div class="blog_function_area">
@@ -43,6 +43,8 @@ import Blog_tabs from "@/components/admin/blog_tabs.vue";
 import Blog_theme from "@/components/common/blog_theme.vue";
 import {useStore} from "@/stores";
 import Blog_user_inf_menu from "@/components/common/blog_user_inf_menu.vue";
+
+const isLaptops1 = isLaptops
 
 const store = useStore()
 const route = useRoute()
@@ -108,21 +110,7 @@ function goIndex(){
           }
         }
 
-        .blog_user_info_menu{
-          img{
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-          }
-          .blog_user_info_menu_dropdown{
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            .blog_user_info_menu_dropdown_span{
-              margin : 0 5px;
-            }
-          }
-        }
+
       }
     }
 

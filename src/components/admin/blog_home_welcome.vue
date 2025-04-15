@@ -78,14 +78,15 @@ getData()
 <style  lang="scss">
 .blog_home_welcome{
   width: 100%;
-  background-image: url("http://su2l8211x.hn-bkt.clouddn.com/wunianblog/20250409202100__img1.jpg");
+  background-image: url("https://img.hongyoubizhi.com/picture/pages/regular/2025/02/07/14/127680843_p0_master1200.jpg?x-oss-process=image/resize,m_fill,w_1000");
   background-repeat: no-repeat;
-  background-position: right;
+  background-position-x: right;
+
+  background-size: auto 150%;
   background-color: var(--color-bg-1);
   padding: 20px;
   border-radius: 5px;
   color: var(--color-text-2);
-
 
   .title{
     font-size: 22px;

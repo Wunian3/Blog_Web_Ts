@@ -5,6 +5,10 @@ body{
     --charts_color1:#59d9c2;
     --charts_color2:#7789e4;
 
+    --nav_text_color:white;
+
+    --container_width:1400px;
+
 }
 body[arco-theme='dark']{
     --bg: #282828;

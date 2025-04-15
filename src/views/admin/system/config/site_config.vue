@@ -3,7 +3,7 @@
     <div class="left">
       <div class="site_info">
         <blog_title title="站点配置"></blog_title>
-        <a-form ref="formRef" :model="siteForm" :label-col-props="{span: 4}" :wrapper-col-props="{span:19}">
+        <a-form ref="formRef" :model="siteForm" :label-col-props="{span:isLaptops1?5: 4}" :wrapper-col-props="{span:isLaptops1?18:19}">
           <a-form-item field="title" label="网站标题" :rules="[{required:true,message:'请输入网站标题'}]"
                        :validate-trigger="['blur']">
             <a-input v-model="siteForm.title" placeholder="网站标题"></a-input>
@@ -57,7 +57,7 @@
       </div>
       <div class="link_info">
         <blog_title title="链接信息"></blog_title>
-        <a-form :model="siteForm" :label-col-props="{span: 3}" :wrapper-col-props="{span:20}">
+        <a-form :model="siteForm" :label-col-props="{span:isLaptops1?4: 3}" :wrapper-col-props="{span:isLaptops1?19:20}">
           <a-form-item label="哔哩哔哩">
             <a-input v-model="siteForm.bilibili_url" placeholder="哔哩哔哩"></a-input>
           </a-form-item>
@@ -79,6 +79,8 @@ import {reactive, ref} from "vue";
 import {siteInfoApi, type siteInfoType, siteInfoUpdateApi} from "@/api/settings_api.ts";
 import {Message} from "@arco-design/web-vue";
 
+
+const isLaptops1 = isLaptops
 
 const siteForm = reactive<siteInfoType>({
   addr: "",

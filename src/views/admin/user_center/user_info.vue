@@ -13,7 +13,7 @@
       </blog_cropper>
 
       <blog_title title="用户信息"></blog_title>
-      <a-form ref="formRef" :model="form" :label-col-props="{span:3}"  :wrapper-col-props="{span:21}">
+      <a-form ref="formRef" :model="form" :label-col-props="{span:isLaptops1?5:3}"  :wrapper-col-props="{span:isLaptops1?19:21}">
         <a-form-item label="用户名">
           <span>{{form.user_name}}</span>
         </a-form-item>
@@ -86,6 +86,8 @@ import Blog_bind_email from "@/components/common/blog_bind_email.vue";
 import Blog_cropper from "@/components/common/blog_cropper.vue";
 import Blog_user_info_preview from "@/components/common/blog_user_info_preview.vue";
 import {Random} from "mockjs";
+
+const isLaptops1 = isLaptops
 
 const formRef =ref()
 

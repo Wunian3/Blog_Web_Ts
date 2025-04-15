@@ -2,8 +2,8 @@
   <blog_config
       title="jwt配置"
       name="jwt"
-      :left-width="30"
-      :right-with="70"
+      :left-width="isLaptops1? 40:30"
+      :right-with="isLaptops1? 60:70"
       :column="column" :help-data="helpList">
   </blog_config>
 
@@ -13,6 +13,8 @@
 import Blog_config from "@/components/admin/blog_config.vue";
 import type {configColumnType} from "@/types";
 import type {jwtType, qqType} from "@/api/settings_api.ts";
+
+const isLaptops1 = isLaptops
 
 const column: configColumnType<jwtType>[] = [
   {label: "秘钥", field: "secret",iptType:"password", rules: [{required: true, message: '请输入秘钥'}]},

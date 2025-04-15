@@ -93,3 +93,12 @@ export function articleContentApi(id: string):Promise<baseResponse<string>>{
 export function articleCollectsApi(params:paramsType):Promise<baseResponse<listDataType<articleType>>>{
     return useAxios.get("/api/articles/collects",{params:params})
 }
+
+export interface articleCalendarType{
+    count:number
+    date:string
+}
+
+export function articleCalendarApi():Promise<baseResponse<articleCalendarType[]>>{
+    return useAxios.get("/api/articles/calendar")
+}

@@ -84,6 +84,22 @@ function select(value :any) {
 
 
 <style  lang="scss">
+.blog_user_info_menu{
+  img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+  .blog_user_info_menu_dropdown{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    .blog_user_info_menu_dropdown_span{
+      margin : 0 5px;
+    }
+  }
+}
+
 .blog_dropdown{
   .arco-dropdown-group-title{
     margin-top: 0;

@@ -6,6 +6,10 @@ export interface ImportMetaEnv{
 
 import 'vue-router';
 
+declare global {
+    const isLaptops: boolean;
+}
+
 declare module 'vue-router' {
     interface RouteMeta {
         isLogin?: boolean;

@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-modal
-        width="30%"
+        :width="isLaptops1?'40%':'30%'"
         :title="title"
         modal-class="blog_article_modal_body"
         :visible="props.visible" @cancel="emits('update:visible', false)"
@@ -61,6 +61,8 @@ import {Random} from "mockjs";
 import {computed} from "vue";
 import blog_article_item from "@/components/common/blog_article_item.vue";
 
+
+const isLaptops1 = isLaptops
 
 const categoryOptions = ref<optionType[]>([])
 const tagOptions = ref<optionType[]>([])

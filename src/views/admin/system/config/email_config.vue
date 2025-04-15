@@ -2,8 +2,8 @@
   <blog_config
       title="邮箱配置"
       name="email"
-      :left-width="35"
-      :right-with="65"
+      :left-width="isLaptops1? 45:35"
+      :right-with="isLaptops1? 55:65"
       :column="column" :help-data="helpList">
     <template #alert>
       <a-alert style="margin-top: 20px">配置邮箱之后，系统通知将会通知到你的邮箱，不配置则不通知</a-alert>
@@ -14,6 +14,8 @@
 import Blog_config from "@/components/admin/blog_config.vue";
 import type {configColumnType} from "@/types";
 import type {emailType} from "@/api/settings_api.ts";
+
+const isLaptops1 = isLaptops
 
 const column: configColumnType<emailType>[] = [
   {label: "邮箱域名", field: "host", rules: [{required: true, message: '请输入邮箱域名'}]},

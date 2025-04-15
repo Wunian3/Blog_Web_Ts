@@ -5,6 +5,7 @@ import {parseToken} from "@/utils/jwt.ts";
 import {logoutApi} from "@/api/user_api.ts";
 import {userInfoApi} from "@/api/user_api.ts";
 import type {Themes} from "md-editor-v3";
+import {siteInfoApi, type siteInfoType} from "@/api/settings_api.ts";
 
 
 export interface userStoreInfoType{
@@ -29,12 +30,33 @@ const userInfo: userStoreInfoType={
     exp: 0,
 }
 
+const siteInfo: siteInfoType={
+    addr:"福建宁德",
+    bei_an:"闽ICP备2025095031号",
+    bilibili_url:"https://space.bilibili.com/457254347",
+    created_at:"2025-03-15",
+    email:"eogod124@gmail.com",
+    gitee_url:"https://gitee.com/eo_wunian",
+    github_url:"https://github.com/Wunian3",
+    job:"学生啦",
+    name:"雾念",
+    qq_image:" ",
+    slogan:"雾念的知识空间",
+    slogan_en:"WuNianBLOG",
+    title:" ",
+    version:"1.0.0",
+    web:" ",
+    wechat_image:" ",
+}
+
+
 export const useStore = defineStore('counter', {
     state() {
         return {
             theme: theme,
             collapsed: collapsed,  //侧边栏状态
             userInfo: userInfo,
+            siteInfo: siteInfo,
         }
     },
     actions: {
@@ -109,6 +131,21 @@ export const useStore = defineStore('counter', {
         clearUserInfo() {
             this.userInfo = userInfo
             localStorage.removeItem("userInfo")
+        },
+        async loadSiteInfo() {
+            const val = sessionStorage.getItem("siteInfo")
+            if(val !== null){
+                try{
+                    this.siteInfo = JSON.parse(val)
+                    return
+                }catch (e){
+                }
+            }
+
+            let res = await siteInfoApi()
+            this.siteInfo = res.data
+
+            sessionStorage.setItem("siteInfo", JSON.stringify(this.siteInfo))
         }
 
     },

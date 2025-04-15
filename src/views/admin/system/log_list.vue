@@ -373,4 +373,14 @@ function jsonPreview() {
 }
 
 
+
+@media screen and (max-width: 1800px) and (min-width: 1400px) {
+  .search_date{
+    display: none;
+  }
+  .search_addr{
+    display: none;
+  }
+}
+
 </style>
