@@ -6,15 +6,30 @@
 </div>
 </template>
 <script setup lang="ts">
-import type {newsType} from "@/api/news_api.ts";
+import {newsListApi, type newsType} from "@/api/news_api.ts";
 import {reactive} from "vue";
 
 const data = reactive<newsType>({
-  hot:"121231",
-  index:"12313213",
-  url:"1231231",
-  title:"12313",
+  hot:"",
+  index:"",
+  url:"",
+  title:"",
 })
+
+async function getData() {
+    let res = await newsListApi(
+        {
+          source: "bilibili", // 默认新闻源
+          size: 3,
+        }
+    );
+  if (res.code ) {
+    return
+  }
+    Object.assign(data,res.data[0]);
+}
+
+getData()
 
 </script>
 

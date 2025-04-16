@@ -6,10 +6,11 @@ import * as echarts from 'echarts';
 import {onMounted, ref} from "vue";
 import type {EChartsOption} from "echarts";
 import router from "@/router";
+import type {TopLevelFormatterParams} from "echarts/types/dist/shared";
 
 interface Props {
   dateList: string[]
-  countList: Array<Array<number>>
+  countList: Array<[string,number]>
   theme: boolean
 }
 
@@ -43,9 +44,9 @@ onMounted(() => {
       backgroundColor: "#555",
       borderColor: "#777",
       borderWidth: 1,
-      formatter: function (e) {
-        e = e.value;
-        return '<div style="font-size: 14px; color: white">' + e[0] + "：" + e[1] + "</div>"
+      formatter: function (e:any) {
+        const v = e.value as [string,number];
+        return '<div style="font-size: 14px; color: white">' + v[0] + "：" + v[1] + "</div>"
       }
     },
     visualMap: {

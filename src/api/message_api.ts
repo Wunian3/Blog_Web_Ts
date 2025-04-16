@@ -23,7 +23,8 @@ export interface messageRecordType{
     send_user_avatar:string
     send_user_id:number
     send_user_nick_name:string
-    isMe?:boolean
+    isMe:boolean
+    // isMe?:boolean
 }
 
 export function messageUserListApi(params?:messageParams):Promise<baseResponse<listDataType<messageType>>>{

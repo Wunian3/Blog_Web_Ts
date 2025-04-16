@@ -5,7 +5,7 @@
         :content="item.content"
         :datetime="relativeCurrentTime(item.created_at)"
         v-for="item in props.data"
-        :avatar="item.user.avatar"
+
     >
       <template #actions>
         <span class="action" @click="commentDigg(item)"><IconHeart/> 点赞 {{item.digg_count}}</span>
@@ -15,6 +15,12 @@
           <span class="action"><IconDelete/> 删除 </span>
         </a-popconfirm>
       </template>
+      <template #avatar>
+        <a-avatar @click="avatarClick(item)">
+          <img :src="item.user.avatar" alt="">
+        </a-avatar>
+      </template>
+
       <a-comment
           :avatar="store.userInfo.avatar"
           v-if="item.isApply || item.id === saveID"
@@ -41,6 +47,7 @@ import {Message} from "@arco-design/web-vue";
 import {useStore} from "@/stores";
 import {IconDelete, IconMessage,IconHeart} from "@arco-design/web-vue/es/icon";
 import {nextTick, ref} from "vue";
+import {showMessageRecord} from "@/components/common/blog_message_record.ts";
 
 
 
@@ -106,8 +113,13 @@ async function commentDigg(record: commentType){
   record.digg_count ++
 }
 
-function handleListEvent() {
-  emits("list");
+function avatarClick(item:commentType) {
+  if(store.userInfo.user_id === item.user_id){
+    Message.warning("别和自己聊！")
+    return
+  }
+  showMessageRecord(item.user_id,item.user.nick_name)
+
 }
 </script>
 

@@ -263,7 +263,9 @@ function edit(record: RecordType<any>){
   emits("edit",record)
 }
 
-const urlRegex = /return useAxios.get\("(.*?)",.*?\)/
+// const urlRegex = /return useAxios.get\("(.*?)",.*?\)/
+// 从列表页的api里面匹配路径
+const urlRegex = /\.get\("(.*?)",/
 
 async function remove(record: RecordType<any>){
   let id = record[rowKey]

@@ -21,7 +21,12 @@
             <component :is="item.icon"></component>
           </template>
           <template #title>{{ item.title }}</template>
-          <a-menu-item :key="sub.name" v-for="sub in item.child">{{ sub.title }}</a-menu-item>
+          <a-menu-item :key="sub.name" v-for="sub in item.child">
+            {{ sub.title }}
+            <template #icon>
+              <component :is="sub.icon"></component>
+              </template>
+          </a-menu-item>
         </a-sub-menu>
 
       </template>
@@ -35,7 +40,7 @@
 </style>
 
 <script setup lang="ts">
-import {ref, watch} from "vue";
+import {defineComponent, h, ref, watch} from "vue";
 import type{Component} from "vue";
 import {useRoute,useRouter} from "vue-router";
 import type{RouteMeta} from "vue-router";
@@ -49,6 +54,14 @@ interface MetaType extends RouteMeta{
 const store =useStore()
 const route = useRoute()
 const router = useRouter()
+
+function getFontComponent(name:string):Component{
+  return defineComponent({
+    render:()=>{
+      return h("i",{class:name})
+    }
+  })
+}
 
 interface MenuType {
   title: string;

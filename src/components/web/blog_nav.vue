@@ -1,5 +1,5 @@
 <template>
-  <div :class="{blog_nav: true, isShow: isShow}">
+  <div :class="{blog_nav: true, isShow:isShow}">
     <div class="blog_nav_container">
       <div class="left">
         <div class="logo">
@@ -13,9 +13,8 @@
             <router-link :to="item.path" v-else>{{ item.title }}</router-link>
           </template>
         </div>
-        <div class="search">
-          <IconSearch></IconSearch>
-        </div>
+
+        <blog_search></blog_search>
       </div>
       <div class="right">
         <div class="login" v-if="!store.isLogin">
@@ -39,26 +38,26 @@ import {IconSearch} from "@arco-design/web-vue/es/icon";
 import type {menuNameType} from "@/api/menu_api.ts";
 import {menuNameListApi} from "@/api/menu_api.ts";
 import Blog_user_inf_menu from "@/components/common/blog_user_inf_menu.vue";
-
-const store = useStore();
-const navList = ref<menuNameType[]>([]);
-
-const isShow = ref(false);
-
+import Blog_search from "@/components/web/blog_search.vue";
 
 interface Props {
   noScroll?: boolean // 不需要滚动监听
 }
 
 const props = defineProps<Props>()
-
 const {noScroll = false} = props
+
+const store = useStore();
+
+const navList = ref<menuNameType[]>([])
+
+const isShow = ref(true)
 
 if (!noScroll) {
   isShow.value = false
   window.addEventListener("scroll", scroll)
+  scroll()
 }
-
 
 function scroll() {
   let top = document.documentElement.scrollTop
@@ -87,6 +86,7 @@ async function getData() {
   }
   let res = await menuNameListApi()
   navList.value = res.data
+
   sessionStorage.setItem("navList", JSON.stringify(navList.value))
 }
 
@@ -98,6 +98,7 @@ getData()
 
 .blog_nav{
   width: 100%;
+  top: 0;
   display: flex;
   justify-content: center;
   position: fixed;
@@ -108,6 +109,8 @@ getData()
   &.isShow{
     background-color: var(--color-bg-1);
     color: var(--color-text-1);
+    box-shadow: 5px 0 5px 0 rgba(0,0,0,0.1);
+
     a{
       color: var(--color-text-1);
     }
@@ -137,6 +140,7 @@ getData()
 
       .logo{
         margin-right: 40px;
+
         .slogan{
           font-size: 21px;
         }
@@ -152,7 +156,7 @@ getData()
           font-size: 16px;
         }
       }
-      .search{
+      .blog_search{
         svg{
           cursor: pointer;
         }

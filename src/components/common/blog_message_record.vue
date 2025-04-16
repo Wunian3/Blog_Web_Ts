@@ -4,17 +4,17 @@
       <div class="title">与{{ props.nickName }}的聊天</div>
       <div class="manage">
         <IconRefresh style="cursor: pointer;margin-right: 5px" @click="flush"></IconRefresh>
-        <a-checkbox v-model="isManage">管理模式</a-checkbox>
-        <a-button v-if="isManage && selectIDList.length" size="mini" style="margin-left: 10px" type="primary"
+        <Checkbox v-model="isManage">管理模式</Checkbox>
+        <Button v-if="isManage && selectIDList.length" size="mini" style="margin-left: 10px" type="primary"
                   status="danger"
                   @click="removeChatGroup">删除
-        </a-button>
+        </Button>
       </div>
     </div>
     <div :class="{record_list:true,isHead:isHead}">
-      <a-checkbox-group v-model="selectIDList">
+      <CheckboxGroup v-model="selectIDList">
       <div :class="{message: true, isMe: item.isMe,isManage:isManage}" v-for="item in messageRecordData.list">
-        <a-checkbox :value="item.id" v-if="isManage"></a-checkbox>
+        <Checkbox :value="item.id" v-if="isManage"></Checkbox>
         <img class="avatar" :src="item.send_user_avatar" alt="">
         <div class="message-main">
           <div class="message-user">{{ item.send_user_nick_name }}</div>
@@ -25,13 +25,13 @@
           </div>
         </div>
       </div>
-      </a-checkbox-group>
+      </CheckboxGroup>
     </div>
     <div class="message_record">
-      <a-textarea placeholder="请输入聊天内容" @keydown.enter.ctrl="messagePublish"
+      <Textarea placeholder="请输入聊天内容" @keydown.enter.ctrl="messagePublish"
                   v-model="messagePublishData.content" auto-size
-                  style="height: 100%"></a-textarea>
-      <a-button type="primary" @click="messagePublish">回复</a-button>
+                  style="height: 100%"></Textarea>
+      <Button type="primary" @click="messagePublish">回复</Button>
     </div>
   </div>
 </template>
@@ -45,6 +45,8 @@ import {messagePublishApi} from "@/api/message_api";
 import type {messagePublishType, userRecordRequestType} from "@/api/message_api";
 import {Message} from "@arco-design/web-vue";
 import {IconRefresh} from "@arco-design/web-vue/es/icon";
+import {Checkbox,Button,CheckboxGroup,Textarea} from "@arco-design/web-vue";
+
 
 interface Props {
   userID: number
@@ -96,6 +98,9 @@ async function getRecordData() {
   messageRecordData.count = res.data.count
 }
 
+defineExpose({
+  getRecordData
+})
 
 async function messagePublish() {
   if (messagePublishData.content === "") {

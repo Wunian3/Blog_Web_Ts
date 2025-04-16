@@ -56,7 +56,7 @@ function getData(){
 
 
 onUnmounted(()=>{
-  clearInterval(timer)
+  clearInterval(timer as number)
 })
 
 

@@ -1,7 +1,7 @@
 <template>
   <div class="blog_comment_components">
     <div class="add_comment">
-      <a-textarea placeholder="输入评论内容" @keydown.enter.ctrl="createComment"
+      <a-textarea ref="textareaRef" placeholder="输入评论内容" @keydown.enter.ctrl="createComment"
                   v-model="addCommentForm.content" :auto-size="{minRows: 6, maxRows: 6}"></a-textarea>
       <a-button @click="createComment" type="primary">发布评论</a-button>
     </div>
@@ -9,7 +9,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import {reactive, watch} from "vue";
+import {reactive, ref, watch} from "vue";
 import type {listDataType} from "@/api";
 import type {commentType} from "@/api/comment_api.ts";
 import {commentListApi} from "@/api/comment_api.ts";
@@ -69,13 +69,22 @@ async function createComment() {
 }
 
 
-
 watch(()=>props.articleId,()=>{
   if(props.articleId){
     addCommentForm.article_id = props.articleId;
     getData()
   }
 },{immediate:true})
+
+
+const textareaRef = ref()
+function focus(){
+  textareaRef.value.focus()
+}
+
+defineExpose({
+  focus
+})
 
 </script>
 

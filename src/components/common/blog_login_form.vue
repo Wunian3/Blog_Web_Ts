@@ -1,28 +1,28 @@
 <template>
-  <a-form class="blog_login_form" ref="formRef" :model="form" :label-col-props="{span: 0}"
+  <Form class="blog_login_form" ref="formRef" :model="form" :label-col-props="{span: 0}"
           :wrapper-col-props="{span: 24}">
     <div class="title">用户登录</div>
-    <a-form-item field="user_name" label="用户名"
+    <FormItem field="user_name" label="用户名"
                  :rules="[{required:true,message:'请输入用户名'}]"
                  :validate-trigger="['blur']"
     >
-      <a-input v-model="form.user_name" placeholder="用户名">
+      <Input v-model="form.user_name" placeholder="用户名">
         <template #prefix>
           <icon-user/>
         </template>
-      </a-input>
-    </a-form-item>
-    <a-form-item field="password" label="密码"
+      </Input>
+    </FormItem>
+    <FormItem field="password" label="密码"
                  :rules="[{required:true,message:'请输入密码'}]"
                  :validate-trigger="['blur']"
     >
-      <a-input type="password" v-model="form.password" placeholder="密码">
+      <Input type="password" v-model="form.password" placeholder="密码">
         <template #prefix>
           <icon-lock/>
         </template>
-      </a-input>
-    </a-form-item>
-    <a-button type="primary" @click="loginEmail">登录</a-button>
+      </Input>
+    </FormItem>
+    <Button type="primary" @click="loginEmail">登录</Button>
     <div class="other-login">
       <div class="label">第三方登录</div>
       <div class="icons">
@@ -31,7 +31,7 @@
         </a>
       </div>
     </div>
-  </a-form>
+  </Form>
 </template>
 
 <script setup lang="ts">
@@ -43,6 +43,7 @@ import type {loginEmailType} from "@/api/user_api";
 import {Message} from "@arco-design/web-vue";
 import {useStore} from "@/stores";
 import {useRoute} from "vue-router";
+import {FormItem,Form,Input,Button} from "@arco-design/web-vue";
 
 const props = defineProps({
   qqRedirectPath:{
@@ -50,9 +51,8 @@ const props = defineProps({
   }
 })
 
-const route = useRoute();
-const store = useStore();
 const emits = defineEmits(["ok"])
+const store = useStore();
 
 const form = reactive<loginEmailType>({
   user_name: "",
@@ -97,6 +97,7 @@ async function qqLogin() {
     Message.warning("未配置qq登录")
     return
   }
+  const route = useRoute();
   // 存一下当前路径?login页面来的
   let path = route.path
   if (props.qqRedirectPath){

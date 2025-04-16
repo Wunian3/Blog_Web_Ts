@@ -39,7 +39,7 @@
       </template>
       <template #tags="{record}:{record: articleType}">
         <div class="article_tags_col">
-          <a-tag v-for="(item, index) in record.tags" :color="colorList[index]">{{ item }}</a-tag>
+          <a-tag v-for="(item, index) in record.tags" :color="articleTagColorList[index]">{{ item }}</a-tag>
         </div>
       </template>
       <template #title="{record}:{record: articleType}">
@@ -64,24 +64,10 @@ import {tagOptionsApi} from "@/api/tag_api";
 import Blog_article_update from "@/components/common/blog_article_update.vue";
 import Blog_article_drawer from "@/components/common/blog_article_drawer.vue";
 import Blog_article_content_drawer from "@/components/common/blog_article_content_drawer.vue";
+import {articleTagColorList} from "@/global/global.ts";
 
 
 const blogTable = ref()
-const colorList = [
-  'red',
-  'orangered',
-  'orange',
-  'gold',
-  'lime',
-  'green',
-  'cyan',
-  'blue',
-  'arcoblue',
-  'purple',
-  'pinkpurple',
-  'magenta',
-  'gray'
-]
 const filterGroup: filterOptionType[] = [
   {
     label: "文章分类",

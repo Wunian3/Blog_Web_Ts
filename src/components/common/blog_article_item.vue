@@ -1,10 +1,16 @@
 <template>
-  <div class="blog_article_item">
+  <div :class="{blog_article_item:true ,preview:props.preview}">
     <div class="cover">
       <a-image :src="props.data.banner_url"></a-image>
     </div>
     <div class="info">
-      <div class="title">{{props.data.title}}</div>
+      <div class="title">
+        <template v-if="props.data.id ===''">
+          {{props.data.title}}
+        </template>
+<!--        <router-link v-else :to="{name:'article',params:{id:props.data.id}}" v-html="props.data.title"></router-link>-->
+        <a v-else :href="`/article/${props.data.id}`" v-html="props.data.title"></a>
+      </div>
       <div class="abstract">
         <a-typography-paragraph :ellipsis="{
           rows:2,
@@ -47,22 +53,28 @@ import {IconClockCircle} from "@arco-design/web-vue/es/icon";
 
 interface Props{
   data:articleUpdateType & articleDataType,
+  preview?: boolean,
 }
 
 const props = defineProps<Props>();
 </script>
 <style  lang="scss">
 .blog_article_item{
-  width: 585px;
   padding: 20px;
+  width: 100%;
   display: flex;
   background-color: var(--color-fill-2);
   border-radius: 5px;
-  transform: scale(0.7);
-  transform-origin: left top;
+
+
+  &.preview{
+    transform: scale(0.7);
+    width: 585px;
+    transform-origin: left top;
+  }
 
   .cover{
-    width: 30%;
+    width: 25%;
     border-radius: 5px;
     overflow: hidden;
 
@@ -85,13 +97,24 @@ const props = defineProps<Props>();
   }
 
   .info{
-    width: 70%;
+    width: 75%;
     color:var(--color-text-2);
     padding-left: 20px;
 
     .title{
       font-weight: 600;
       font-size: 16px;
+
+      a{
+        color: var(--color-text-1);
+        text-decoration: none;
+      }
+
+      em{
+        color: #004eff;
+        margin-right: 2px;
+      }
+
     }
     .abstract{
       .arco-typography{

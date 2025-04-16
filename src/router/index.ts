@@ -1,6 +1,8 @@
 import {createRouter, createWebHistory, type RouteMeta} from 'vue-router'
 import {useStore} from "@/stores";
 import {Message} from "@arco-design/web-vue";
+import NProgress from "nprogress";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -31,6 +33,17 @@ const router = createRouter({
           path: 'chat',
           name: 'chat',
           component: () => import('../views/web/chat.vue'),
+
+        },
+        {
+          path: "article/404",
+          name: "article_notfound",
+          component: () => import('../views/web/article_notfound.vue'),
+        },
+        {
+          path: 'article/:id',
+          name: 'article',
+          component: () => import('../views/web/article.vue'),
 
         },
       ]
@@ -100,7 +113,7 @@ const router = createRouter({
         },
         {
           path: 'article',
-          name: 'article',
+          name: 'article_mgr',
           meta:{
             title: '文章管理',
             isTourist: true,
@@ -275,14 +288,17 @@ const router = createRouter({
           ]
         },
       ]
+    },
+    {
+      path: '/:pathMatch(.*)*', // 页面不存在的情况下会跳到404页面
+      name: 'notFound',
+      component: () => import("@/views/web/notfound.vue")
     }
 
   ],
 })
 
 export default router
-
-
 
 router.beforeEach((to, from, next) => {
   const store = useStore();
@@ -306,5 +322,10 @@ router.beforeEach((to, from, next) => {
     return
   }
 
+  NProgress.start()
   next()
+})
+
+router.afterEach(() => {
+  NProgress.done()
 })

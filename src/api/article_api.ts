@@ -2,6 +2,11 @@ import type {baseResponse, listDataType, paramsType} from "@/api/index.ts";
 import {useAxios} from "@/api/index.ts";
 import type {optionType} from "@/types";
 import {cacheRequest} from "@/api/index.ts";
+export interface articleItem{
+    id: string;
+    title: string;
+}
+
 export interface articleType {
     abstract: string
     banner_id: number
@@ -21,6 +26,12 @@ export interface articleType {
     user_avatar: string
     user_id:number
     user_nick_name: string
+    content?:string
+    is_collect?:boolean
+    // 手动加
+    is_digg?:boolean
+    next?:articleItem
+    prev?:articleItem
 }
 export interface articleItemType {
     abstract: string
@@ -51,8 +62,13 @@ export interface articleDataType{
     look_count: number
 }
 
+export interface articleParamsType extends paramsType{
+    date?:string
+    tag?:string
+    category?:string
+}
 
-export  function articleListApi(params:paramsType):Promise<baseResponse<listDataType<articleType>>>{
+export  function articleListApi(params?:articleParamsType):Promise<baseResponse<listDataType<articleType>>>{
     return useAxios.get("/api/articles",{params:params})
 }
 
@@ -101,4 +117,27 @@ export interface articleCalendarType{
 
 export function articleCalendarApi():Promise<baseResponse<articleCalendarType[]>>{
     return useAxios.get("/api/articles/calendar")
+}
+
+export function articleDetailApi(id:string):Promise<baseResponse<articleType>>{
+    return useAxios.get("/api/articles/"+id)
+}
+
+export function articleCollectsPostApi(id:string):Promise<baseResponse<string>>{
+    return useAxios.post("/api/articles/collects",{id})
+}
+export function articleDiggApi(id:string):Promise<baseResponse<string>>{
+    return useAxios.post("/api/digg/article",{id})
+}
+
+export interface articleSearchType{
+    body:string,
+    id:string,
+    key:string,
+    slug:string,
+    title:string,
+}
+
+export function articleSearchApi(params:paramsType):Promise<baseResponse<listDataType<articleSearchType>>>{
+    return useAxios.get("/api/articles/text",{params})
 }

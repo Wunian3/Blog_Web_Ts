@@ -99,6 +99,7 @@ import {useStore} from "@/stores";
 import {onUploadImg} from "@/api/image_api.ts";
 import {MdEditor} from "md-editor-v3";
 import {MdPreview} from "md-editor-v3";
+import {onUnmounted} from "vue";
 
 const store=useStore();
 const params = reactive<paramsType>({
@@ -180,9 +181,14 @@ function sendImageEvent(){
 
 let socket = ref<WebSocket>()
 let index = 0
+
 const chatData = reactive({
   nickName: "",
   onlineCount: 0
+})
+
+onUnmounted(()=>{
+  socket.value?.close()
 })
 
 function websocketConnect() {
@@ -237,7 +243,7 @@ function websocketConnect() {
   }
   // 服务端关闭
   socket.value.onclose = function (ev) {
-    Message.error("连接断开")
+    // Message.error("连接断开")
     socket.value = undefined;
   }
 }

@@ -13,7 +13,7 @@ import {useStore} from "@/stores";
 
 const store = useStore()
 
-const data = reactive<{ dateList: string[], countList: Array<Array<number>> }>({
+const data = reactive<{ dateList: string[], countList: Array<[string,number]> }>({
   dateList: [],
   countList: [],
 })
