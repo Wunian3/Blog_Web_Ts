@@ -78,6 +78,6 @@ async function updateConfig() {
   getConfig()
 }
 </script>
-<style scoped lang="scss">
+<style  lang="scss">
 
 </style>

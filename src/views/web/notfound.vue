@@ -6,6 +6,6 @@
 <div>404NOT FOUND</div>
 </template>
 
-<style scoped lang="scss">
+<style  lang="scss">
 
 </style>

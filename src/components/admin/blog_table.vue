@@ -58,7 +58,7 @@
                   <template #cell="{record}" v-if="item.slotName === 'action'">
                     <div class="blog_cell_actions">
                       <slot name="action_left" :record="record"></slot>
-                      <a-button v-if="!props.noEdit" type="primary" @click="edit(record)">编辑</a-button>
+                      <a-button v-if="!props.noEdit" type="primary" @click="edit(record)">{{ editLabel }}</a-button>
                       <slot name="action_middle" :record="record"></slot>
                       <a-popconfirm v-if="!props.noDelete" content="是否确认删除?" @ok="remove(record)" >
                         <a-button status="danger" type="primary" >删除</a-button>
@@ -135,7 +135,7 @@ interface Props {
   searchPlaceholder?: string // 模糊匹配的提示词
   defaultParams?: paramsType & any //第一次查询的查询参数
   noPage?: boolean //不分
-
+  editLabel?:string
 }
 
 const props = defineProps<Props>()
@@ -144,6 +144,7 @@ const {
     limit = 10,
     rowKey="id",
     addLabel="添加",
+    editLabel = "编辑",
   searchPlaceholder="搜索"
 } =props
 

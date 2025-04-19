@@ -6,6 +6,12 @@ import {logoutApi} from "@/api/user_api.ts";
 import {userInfoApi} from "@/api/user_api.ts";
 import type {Themes} from "md-editor-v3";
 import {siteInfoApi, type siteInfoType} from "@/api/settings_api.ts";
+import {
+    bigModelSettingsApi,
+    type bigModelSettingsType,
+    roleHistoryListApi,
+    type roleSingleType
+} from "@/api/big_model_api.ts";
 
 
 export interface userStoreInfoType{
@@ -49,7 +55,19 @@ const siteInfo: siteInfoType={
     wechat_image:" ",
 }
 
+const bigModelInfo:bigModelSettingsType = {
+    name: "",
+    enable: false,
+    order: 0,
+    api_key: "",
+    api_secret: "",
+    title: "",
+    prompt: "",
+    slogan: "",
+    help: "",
+}
 
+const userRoleHistoryList:roleSingleType[] = []
 export const useStore = defineStore('counter', {
     state() {
         return {
@@ -57,6 +75,8 @@ export const useStore = defineStore('counter', {
             collapsed: collapsed,  //侧边栏状态
             userInfo: userInfo,
             siteInfo: siteInfo,
+            bigModelInfo:bigModelInfo,
+            userRoleHistoryList:userRoleHistoryList,
         }
     },
     actions: {
@@ -146,6 +166,15 @@ export const useStore = defineStore('counter', {
             this.siteInfo = res.data
 
             sessionStorage.setItem("siteInfo", JSON.stringify(this.siteInfo))
+        },
+        async getBigModelInfo(){
+            let res = await bigModelSettingsApi()
+            Object.assign(this.bigModelInfo, res.data)
+        },
+        async getUserRoleHistoryList(){
+            if(!this.isLogin)return
+            let res = await roleHistoryListApi()
+            this.userRoleHistoryList = res.data
         }
 
     },

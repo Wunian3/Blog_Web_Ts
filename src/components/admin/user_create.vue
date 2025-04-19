@@ -79,7 +79,7 @@ async function createUser() {
   let res = await userCreateApi(form)
   if (res.code) {
     Message.error(res.msg)
-    return
+    return false
   }
   Message.success(res.msg)
   emits("update:visible", false)

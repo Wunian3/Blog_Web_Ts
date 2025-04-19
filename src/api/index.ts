@@ -12,7 +12,10 @@ export interface baseResponse<T> {
     data: T
     msg: string
 }
-
+export interface optionsResponse<T> {
+    label:string
+    value:T
+}
 export interface listDataType<T>{
     count: number
     list:T[]
@@ -58,7 +61,7 @@ export function defaultOptionApi(url:string,params?:paramsType):Promise<baseResp
 return useAxios.get(url,{params})
 }
 
-export function cacheRequest<T>(func:()=>Promise<T>):() => Promise<T>{
+export function cacheRequest<T>(func:(...args: any)=>Promise<T>):() => Promise<T>{
     let lastRequestTime: number = 0; //存储时间
     let cacheData: T|null = null ;
     let currentRequest: Promise<T> | null= null;
@@ -70,7 +73,7 @@ export function cacheRequest<T>(func:()=>Promise<T>):() => Promise<T>{
             return Promise.resolve(cacheData)
         }
         if(!currentRequest){
-            currentRequest = func().then((res:T)=>{
+            currentRequest = func(...arguments).then((res:T)=>{
                 //更新数据和时间
                 lastRequestTime = currentTime
                 cacheData = res

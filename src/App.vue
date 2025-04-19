@@ -8,4 +8,5 @@ import {useStore} from "@/stores";
 const store = useStore()
 store.loadTheme()
 store.loadToken()
+store.getBigModelInfo()
 </script>

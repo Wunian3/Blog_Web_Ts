@@ -3,7 +3,7 @@
 </script>
 
 <template>
-<div>404NOT FOUND</div>
+<router-view></router-view>
 </template>
 
 <style  lang="scss">

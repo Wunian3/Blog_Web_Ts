@@ -10,7 +10,7 @@
           <template v-for="item in navList">
             <a target="_blank" :href="item.path" v-if="item.path.startsWith('http')"
                :title="item.title">{{ item.title }}</a>
-            <router-link :to="item.path" v-else>{{ item.title }}</router-link>
+            <router-link  :to="item.path" v-else>{{ item.title }}</router-link>
           </template>
         </div>
 
@@ -33,12 +33,14 @@
 <script setup lang="ts">
 import {useStore} from "@/stores";
 import Blog_theme from "@/components/common/blog_theme.vue";
-import {onUnmounted, ref} from "vue";
+import {onUnmounted, reactive, ref} from "vue";
 import {IconSearch} from "@arco-design/web-vue/es/icon";
 import type {menuNameType} from "@/api/menu_api.ts";
 import {menuNameListApi} from "@/api/menu_api.ts";
 import Blog_user_inf_menu from "@/components/common/blog_user_inf_menu.vue";
 import Blog_search from "@/components/web/blog_search.vue";
+import {bigModelSettingsApi, type bigModelSettingsType} from "@/api/big_model_api.ts";
+
 
 interface Props {
   noScroll?: boolean // 不需要滚动监听
@@ -86,6 +88,15 @@ async function getData() {
   }
   let res = await menuNameListApi()
   navList.value = res.data
+  if(store.bigModelInfo.enable){
+    //启用
+    // navList.value
+    navList.value.splice(store.bigModelInfo.order,0,{
+      id:12345,
+      title:"大模型",
+      path:"/bigModel/square",
+    })
+  }
 
   sessionStorage.setItem("navList", JSON.stringify(navList.value))
 }
@@ -93,7 +104,7 @@ async function getData() {
 getData()
 
 </script>
-<style scoped lang="scss">
+<style  lang="scss">
 
 
 .blog_nav{

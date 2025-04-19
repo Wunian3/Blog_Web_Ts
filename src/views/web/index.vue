@@ -23,7 +23,7 @@
 
         </div>
         <div class="right">
-          <blog_card title="宝贝推广">
+          <blog_card title="为你推荐">
             <blog_promotion></blog_promotion>
           </blog_card>
           <blog_card title="标签云">
